@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-century: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  --color-background: var(--bg-color);
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-accent: var(--accent-color);
+  --color-text: var(--text-color);
+}
+
+:root {
+  --bg-color: #F8F9FA;
+  --primary-color: #000000;
+  --secondary-color: #E9ECEF;
+  --accent-color: #3B82F6;
+  --text-color: #212529;
+}
+
+.dark {
+  --bg-color: #0f172a;
+  --primary-color: #ffffff;
+  --secondary-color: #1e293b;
+  --accent-color: #3B82F6;
+  --text-color: #f8fafc;
+}
+
+@layer base {
+  body {
+    @apply antialiased bg-background text-text transition-colors duration-300;
+  }
+
+  /* Custom Range Slider Styles */
+  input[type="range"]::-webkit-slider-thumb {
+    @apply w-7 h-7 bg-primary rounded-full cursor-pointer appearance-none border-2 border-white dark:border-gray-800 shadow-md transition-all;
+  }
+  input[type="range"]:active::-webkit-slider-thumb {
+    @apply ring-4 ring-primary/30;
+  }
+  input[type="range"]::-moz-range-thumb {
+    @apply w-7 h-7 bg-primary rounded-full cursor-pointer border-2 border-white dark:border-gray-800 shadow-md transition-all;
+  }
+  input[type="range"]:active::-moz-range-thumb {
+    @apply ring-4 ring-primary/30;
+  }
+}
+

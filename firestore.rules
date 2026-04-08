@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid is string &&
+             data.email is string;
+    }
+
+    function isValidHistory(data) {
+      return data.keys().hasAll(['uid', 'path', 'color', 'timestamp']) &&
+             data.uid == request.auth.uid &&
+             data.path is string &&
+             data.color is string;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      
+      match /history/{historyId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User preferences and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "defaultColor": { "type": "string" },
+            "defaultComplexity": { "type": "number" },
+            "defaultContrast": { "type": "number" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "BlobHistory": {
+      "title": "Blob History",
+      "description": "History of generated blobs",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "path": { "type": "string" },
+        "color": { "type": "string" },
+        "seed": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "storagePath": { "type": "string" }
+      },
+      "required": ["uid", "path", "color", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "UserProfile",
+      "description": "User profile and preferences"
+    },
+    "/users/{uid}/history/{historyId}": {
+      "schema": "BlobHistory",
+      "description": "User's generated blob history"
+    }
+  }
+}
